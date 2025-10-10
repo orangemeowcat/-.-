@@ -1,0 +1,84 @@
+<!-- Я хз, чё ты тут пытаешься найти, тут ничего интересного нет. Дада, код написан на гопоте за 0.1 секунду и выложен хрен пойми где, хрен пойми как -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Не лолз</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap&subset=cyrillic');
+    html, body {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100dvw;
+      height: 100dvh !important;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+      color: #39ff14;
+      font-family: 'Russo One', sans-serif;
+    }
+    #floating-text {
+      position: absolute;
+      font-size: clamp(2rem, 4vw, 3rem);
+      text-shadow:
+        0 0 5px #39ff14,
+        0 0 10px #39ff14,
+        0 0 20px #39ff14,
+        0 0 30px #39ff14;
+      white-space: nowrap;
+      top: 0;
+      left: 0;
+    }
+    .contacts {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      color: #bbb;
+    }
+    @media (orientation: portrait) {
+      #floating-text {
+        font-size: clamp(0.75rem, 3vw, 1rem);
+      }
+      .contacts {
+        bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="floating-text">ой, это не лолз, ты думай куда зашёл</div>
+  <div class="contacts">
+    Email for dumb questions about this domain: orangemeowcat@proton.me
+  </div>
+  <script>
+    (function() {
+      const el = document.getElementById('floating-text');
+      let dx = 2, dy = 2;
+      let x = 0, y = 0;
+      window.addEventListener('resize', () => {
+        dx = Math.abs(dx);
+        dy = Math.abs(dy);
+        x = Math.min(x, window.innerWidth - el.clientWidth);
+        y = Math.min(y, window.innerHeight - el.clientHeight);
+      });
+      function update() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const rect = el.getBoundingClientRect();
+        x += dx;
+        y += dy;
+        if (x <= 0 || x + rect.width >= w) dx = -dx;
+        if (y <= 0 || y + rect.height >= h) dy = -dy;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+        requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    })();
+  </script>
+</body>
+</html>
